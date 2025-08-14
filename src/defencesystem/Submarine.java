@@ -15,6 +15,7 @@ public class Submarine extends javax.swing.JFrame implements Obsever{
      */
     public Submarine() {
         initComponents();
+        buttonsEnable(subCheckBox.isSelected());
         setVisible(true);
     }
     
@@ -36,6 +37,45 @@ public class Submarine extends javax.swing.JFrame implements Obsever{
     public String toString(){
         return "Submarine";
     }
+    
+    @Override
+    public void setEnableButtons(int value){
+        if(value>20){
+            subBtnShoot.setEnabled(true);
+        }else{
+            subBtnShoot.setEnabled(false);
+        }
+        
+        if(value>40){
+            subBtnSonar.setEnabled(true);
+        }else{
+            subBtnSonar.setEnabled(false);
+        }
+        
+        if(value>60){
+            subBtnMissile.setEnabled(true);
+        }else{
+            subBtnMissile.setEnabled(false);
+        }
+        
+        if(value>80){
+            subBtnTrident.setEnabled(true);
+        }else{
+            subBtnTrident.setEnabled(false);
+        }
+        
+    buttonsEnable(subCheckBox.isSelected());
+    }
+    
+    public void buttonsEnable(boolean status){
+        if(!status){
+            subBtnShoot.setEnabled(false);
+            subBtnSonar.setEnabled(false);
+            subBtnMissile.setEnabled(false);
+            subBtnTrident.setEnabled(false);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

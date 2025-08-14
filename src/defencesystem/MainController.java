@@ -41,12 +41,18 @@ public class MainController extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 255, 204));
+        setPreferredSize(new java.awt.Dimension(550, 550));
 
         mainSlider.setMajorTickSpacing(20);
         mainSlider.setPaintLabels(true);
         mainSlider.setPaintTicks(true);
         mainSlider.setValue(0);
         mainSlider.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        mainSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                mainSliderStateChanged(evt);
+            }
+        });
 
         mainCheckBox.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         mainCheckBox.setText("Area Clear");
@@ -94,7 +100,7 @@ public class MainController extends javax.swing.JFrame {
                 .addComponent(mainCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(mainSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -161,6 +167,11 @@ public class MainController extends javax.swing.JFrame {
     private void mainPrivateCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainPrivateCheckBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_mainPrivateCheckBoxActionPerformed
+
+    private void mainSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mainSliderStateChanged
+        observable.buttonController(mainSlider.getValue());
+// TODO add your handling code here:
+    }//GEN-LAST:event_mainSliderStateChanged
                                            
     
   

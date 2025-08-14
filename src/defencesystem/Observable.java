@@ -39,4 +39,10 @@ public class Observable{
            }
        }
    }
+   
+   public void buttonController(int value){
+       for(Obsever obsever:observerList){
+           obsever.setEnableButtons(value);
+       }
+   }
 }

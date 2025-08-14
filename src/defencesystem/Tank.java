@@ -15,6 +15,7 @@ public class Tank extends javax.swing.JFrame implements Obsever{
      */
     public Tank() {
         initComponents();
+        buttonsEnable(tankCheckBox.isSelected());
         setVisible(true);
     }
     
@@ -35,6 +36,45 @@ public class Tank extends javax.swing.JFrame implements Obsever{
     @Override
     public String toString(){
         return "Tank";
+    }
+    
+    @Override
+    public void setEnableButtons(int value){
+        if(value>20){
+            tankBtnShoot.setEnabled(true);
+        }else{
+            tankBtnShoot.setEnabled(false);
+        }
+        
+        if(value>40){
+            tankBtnMissile.setEnabled(true);
+        }else{
+            tankBtnMissile.setEnabled(false);
+        }
+        
+        if(value>60){
+            tankBtnRadar.setEnabled(true);
+        }else{
+            tankBtnRadar.setEnabled(false);
+        }
+        
+        if(value>80){
+            tankBtnRotate.setEnabled(true);
+        }else{
+            tankBtnRotate.setEnabled(false);
+        }
+        
+        buttonsEnable(tankCheckBox.isSelected());
+        
+    }
+    
+    public void buttonsEnable(boolean status){
+        if(!status){
+            tankBtnShoot.setEnabled(false);
+            tankBtnMissile.setEnabled(false);
+            tankBtnRadar.setEnabled(false);
+            tankBtnRotate.setEnabled(false);
+        }
     }
      
     /**

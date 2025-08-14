@@ -15,6 +15,7 @@ public class Helicopter extends javax.swing.JFrame implements Obsever{
      */
     public Helicopter() {
         initComponents();
+        buttonsEnable(heliCheckBox.isSelected());
         setVisible(true);
     }
     
@@ -35,6 +36,38 @@ public class Helicopter extends javax.swing.JFrame implements Obsever{
     @Override
     public String toString(){
         return "Helicopter";
+    }
+    
+    @Override
+    public void setEnableButtons(int value){
+        if(value>20){
+            heliBtnShoot.setEnabled(true);
+        }else{
+            heliBtnShoot.setEnabled(false);
+        }
+        
+        if(value>40){
+            heliBtnMissile.setEnabled(true);
+        }else{
+            heliBtnMissile.setEnabled(false);
+        }
+        
+        if(value>60){
+            heliBtnLaser.setEnabled(true);
+        }else{
+            heliBtnLaser.setEnabled(false);
+        }
+        
+        buttonsEnable(heliCheckBox.isSelected());
+       
+    }
+    
+    public void buttonsEnable(boolean status){
+        if(!status){
+            heliBtnShoot.setEnabled(false);
+            heliBtnMissile.setEnabled(false);
+            heliBtnLaser.setEnabled(false);
+        }
     }
     
     /**
