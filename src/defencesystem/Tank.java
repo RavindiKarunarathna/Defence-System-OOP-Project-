@@ -26,6 +26,16 @@ public class Tank extends javax.swing.JFrame implements Obsever{
             tankTextFieldClear.setText("Area is not Cleared");
         }
     }
+    
+    @Override
+    public void setMessage(String message){
+        tankTextArea.setText(tankTextArea.getText().isEmpty()? message:tankTextArea.getText()+"\n"+message);
+    }
+    
+    @Override
+    public String toString(){
+        return "Tank";
+    }
      
     /**
      * This method is called from within the constructor to initialize the form.

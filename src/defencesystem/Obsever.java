@@ -10,5 +10,6 @@ package defencesystem;
  */
 public interface Obsever {
     void setAreaClear(boolean isChecked);
+    void setMessage(String message);
     
 }

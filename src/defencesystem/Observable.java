@@ -24,4 +24,19 @@ public class Observable{
            obsever.setAreaClear(isChecked);
        }
    }
+   
+   public void sendMessage(String message){
+       for(Obsever obsever:observerList){
+           obsever.setMessage(message);
+       }
+   }
+   
+   public void sendPrivateMessage(String message,String obsever){
+       for(Obsever ob:observerList){
+           if(ob.toString().equalsIgnoreCase(obsever)){
+               ob.setMessage(message);
+               break;
+           }
+       }
+   }
 }

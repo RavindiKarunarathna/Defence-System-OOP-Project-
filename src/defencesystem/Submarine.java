@@ -26,6 +26,16 @@ public class Submarine extends javax.swing.JFrame implements Obsever{
             subTextFieldClear.setText("Area is not Cleared");
         }   
     }
+    
+    @Override
+    public void setMessage(String message){
+        subTextArea.setText(subTextArea.getText().isEmpty()? message:subTextArea.getText()+"\n"+message);
+    }
+    
+    @Override
+    public String toString(){
+        return "Submarine";
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

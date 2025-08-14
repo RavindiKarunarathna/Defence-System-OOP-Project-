@@ -27,6 +27,16 @@ public class Helicopter extends javax.swing.JFrame implements Obsever{
         }
     }
 
+    @Override
+    public void setMessage(String message){
+      heliTextArea.setText(heliTextArea.getText().isEmpty()? message:heliTextArea.getText()+"\n"+message);
+    }
+    
+    @Override
+    public String toString(){
+        return "Helicopter";
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
