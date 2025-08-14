@@ -3,14 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/NetBeans/DefenceSystem/src/defencesystem/observer.java</file>
-            <file>file:/D:/NetBeans/DefenceSystem/src/defencesystem/DefenceSystem.java</file>
-            <file>file:/D:/NetBeans/DefenceSystem/src/defencesystem/Observable.java</file>
-            <file>file:/D:/NetBeans/DefenceSystem/src/defencesystem/observableInterface.java</file>
             <file>file:/D:/NetBeans/DefenceSystem/src/defencesystem/Tank.java</file>
+            <file>file:/D:/NetBeans/DefenceSystem/src/defencesystem/Submarine.java</file>
             <file>file:/D:/NetBeans/DefenceSystem/src/defencesystem/MainController.java</file>
             <file>file:/D:/NetBeans/DefenceSystem/src/defencesystem/Helicopter.java</file>
-            <file>file:/D:/NetBeans/DefenceSystem/src/defencesystem/Submarine.java</file>
         </group>
     </open-files>
 </project-private>
