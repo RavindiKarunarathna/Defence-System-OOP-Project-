@@ -8,9 +8,9 @@ public class DefenceSystem {
         
         MainController mainController=new MainController(observable);
         
-        observable.addToObsever(new Helicopter());
-        observable.addToObsever(new Tank());
-        observable.addToObsever(new Submarine());
+        observable.addToObsever(new Helicopter(mainController));
+        observable.addToObsever(new Tank(mainController));
+        observable.addToObsever(new Submarine(mainController));
         
     }
     

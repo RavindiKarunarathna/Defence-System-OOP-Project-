@@ -19,7 +19,10 @@ public class MainController extends javax.swing.JFrame {
         setVisible(true);
         mainComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "General","Helicopter","Submarine","Tank" }));
     }
-    
+ 
+    public void obseverMessage(String obsever,String message){
+        mainTextArea.setText(mainTextArea.getText().isBlank() ? obsever+" : "+message: mainTextArea.getText()+"\n"+obsever+" : "+message);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

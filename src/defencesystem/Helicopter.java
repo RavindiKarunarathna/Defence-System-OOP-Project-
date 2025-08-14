@@ -10,11 +10,13 @@ package defencesystem;
  */
 public class Helicopter extends javax.swing.JFrame implements Obsever{
     
+    MainController mainController;
     /**
      * Creates new form Helicopter
      */
-    public Helicopter() {
+    public Helicopter(MainController mainController) {
         initComponents();
+        this.mainController=mainController;
         buttonsEnable(heliCheckBox.isSelected());
         setVisible(true);
     }
@@ -133,6 +135,11 @@ public class Helicopter extends javax.swing.JFrame implements Obsever{
         });
 
         heliBtnSend.setText("Send");
+        heliBtnSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                heliBtnSendActionPerformed(evt);
+            }
+        });
 
         heliTextFieldClear.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         heliTextFieldClear.setText("Area is Not Cleared");
@@ -211,6 +218,12 @@ public class Helicopter extends javax.swing.JFrame implements Obsever{
     private void heliTextFieldMsgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_heliTextFieldMsgActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_heliTextFieldMsgActionPerformed
+
+    private void heliBtnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_heliBtnSendActionPerformed
+        mainController.obseverMessage("Helicopter", heliTextFieldMsg.getText());
+        heliTextFieldMsg.setText("");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_heliBtnSendActionPerformed
 
     /**
      * @param args the command line arguments

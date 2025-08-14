@@ -10,11 +10,13 @@ package defencesystem;
  */
 public class Tank extends javax.swing.JFrame implements Obsever{
  
+    MainController mainController;
     /**
      * Creates new form Tank
      */
-    public Tank() {
+    public Tank(MainController mainController) {
         initComponents();
+        this.mainController=mainController;
         buttonsEnable(tankCheckBox.isSelected());
         setVisible(true);
     }
@@ -149,6 +151,11 @@ public class Tank extends javax.swing.JFrame implements Obsever{
         });
 
         tankBtnSend.setText("Send");
+        tankBtnSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tankBtnSendActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -234,6 +241,12 @@ public class Tank extends javax.swing.JFrame implements Obsever{
     private void tankTextFieldMsgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tankTextFieldMsgActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tankTextFieldMsgActionPerformed
+
+    private void tankBtnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tankBtnSendActionPerformed
+        mainController.obseverMessage("Tank", tankTextFieldMsg.getText());
+        tankTextFieldMsg.setText("");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tankBtnSendActionPerformed
 
     /**
      * @param args the command line arguments

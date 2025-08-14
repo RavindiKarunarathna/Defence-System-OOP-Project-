@@ -10,11 +10,14 @@ package defencesystem;
  */
 public class Submarine extends javax.swing.JFrame implements Obsever{
    
+    MainController mainController;
+    
     /**
      * Creates new form Submarine
      */
-    public Submarine() {
+    public Submarine(MainController mainController) {
         initComponents();
+        this.mainController=mainController;
         buttonsEnable(subCheckBox.isSelected());
         setVisible(true);
     }
@@ -148,6 +151,11 @@ public class Submarine extends javax.swing.JFrame implements Obsever{
         });
 
         subBtnSend.setText("Send");
+        subBtnSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subBtnSendActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -234,6 +242,12 @@ public class Submarine extends javax.swing.JFrame implements Obsever{
     private void subTextFieldMsgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subTextFieldMsgActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_subTextFieldMsgActionPerformed
+
+    private void subBtnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subBtnSendActionPerformed
+        mainController.obseverMessage("Submarine", subTextFieldMsg.getText());
+        subTextFieldMsg.setText("");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_subBtnSendActionPerformed
 
     /**
      * @param args the command line arguments
