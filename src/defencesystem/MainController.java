@@ -9,14 +9,21 @@ package defencesystem;
  * @author User
  */
 public class MainController extends javax.swing.JFrame {
-    
+    Observable observable;
     /**
      * Creates new form MainController
      */
-    public MainController() {
+    public MainController(Observable observable) {
         initComponents();        
+        setLocation(220, 10);
+        this.observable=observable;
+        setVisible(true);
+        mainComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "General","Helicopter","Submarine","Tank" }));
     }
-    
+ 
+    public void obseverMessage(String obsever,String message){
+        mainTextArea.setText(mainTextArea.getText().isBlank() ? obsever+" : "+message: mainTextArea.getText()+"\n"+obsever+" : "+message);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,17 +40,27 @@ public class MainController extends javax.swing.JFrame {
         mainBtnSend = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         mainTextArea = new javax.swing.JTextArea();
+        mainPrivateCheckBox = new javax.swing.JCheckBox();
+        mainComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 255, 204));
+        setPreferredSize(new java.awt.Dimension(500, 330));
 
         mainSlider.setMajorTickSpacing(20);
         mainSlider.setPaintLabels(true);
         mainSlider.setPaintTicks(true);
         mainSlider.setValue(0);
         mainSlider.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        mainSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                mainSliderStateChanged(evt);
+            }
+        });
 
+        mainCheckBox.setBackground(new java.awt.Color(0, 0, 0));
         mainCheckBox.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        mainCheckBox.setForeground(new java.awt.Color(255, 255, 255));
         mainCheckBox.setText("Area Clear");
         mainCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -51,10 +68,10 @@ public class MainController extends javax.swing.JFrame {
             }
         });
 
-        mainLabel.setBackground(new java.awt.Color(0, 0, 255));
+        mainLabel.setBackground(new java.awt.Color(0, 102, 51));
         mainLabel.setFont(new java.awt.Font("Arial", 3, 24)); // NOI18N
         mainLabel.setForeground(new java.awt.Color(255, 255, 255));
-        mainLabel.setText("Main Controller");
+        mainLabel.setText(" Main Controller");
         mainLabel.setOpaque(true);
 
         mainBtnSend.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -69,102 +86,110 @@ public class MainController extends javax.swing.JFrame {
         mainTextArea.setRows(5);
         jScrollPane2.setViewportView(mainTextArea);
 
+        mainPrivateCheckBox.setBackground(new java.awt.Color(0, 0, 0));
+        mainPrivateCheckBox.setForeground(new java.awt.Color(255, 255, 255));
+        mainPrivateCheckBox.setText("Send Private");
+        mainPrivateCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mainPrivateCheckBoxActionPerformed(evt);
+            }
+        });
+
+        mainComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        mainComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mainComboBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(mainLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
+                .addComponent(mainSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(mainTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mainPrivateCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mainBtnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(mainSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(mainTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(mainCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(mainLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(176, 176, 176))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(mainBtnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(69, 69, 69))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(mainComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(282, 282, 282)
+                        .addComponent(mainCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
                 .addComponent(mainLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(mainCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(mainSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(mainTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mainBtnSend)
-                .addGap(3, 3, 3)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                    .addComponent(mainComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mainCheckBox))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(mainSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mainTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(mainPrivateCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mainBtnSend))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(149, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void mainCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainCheckBoxActionPerformed
+        observable.areaClear(mainCheckBox.isSelected());
         // TODO add your handling code here:
     }//GEN-LAST:event_mainCheckBoxActionPerformed
 
     private void mainBtnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainBtnSendActionPerformed
+        if(mainPrivateCheckBox.isSelected()){
+            observable.sendPrivateMessage("Main Controller : "+mainTextField.getText(), (String)mainComboBox.getSelectedItem());
+        }else{
+            observable.sendMessage("Main Controller : "+mainTextField.getText());  
+        }
+        mainTextField.setText("");
         // TODO add your handling code here:
     }//GEN-LAST:event_mainBtnSendActionPerformed
+
+    private void mainPrivateCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainPrivateCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mainPrivateCheckBoxActionPerformed
+
+    private void mainSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mainSliderStateChanged
+        observable.buttonController(mainSlider.getValue());
+// TODO add your handling code here:
+    }//GEN-LAST:event_mainSliderStateChanged
+
+    private void mainComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mainComboBoxActionPerformed
                                            
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new MainController().setVisible(true);
-//            }
-//        });
-    }
-
+  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton mainBtnSend;
     private javax.swing.JCheckBox mainCheckBox;
+    private javax.swing.JComboBox<String> mainComboBox;
     private javax.swing.JLabel mainLabel;
+    private javax.swing.JCheckBox mainPrivateCheckBox;
     private javax.swing.JSlider mainSlider;
     private javax.swing.JTextArea mainTextArea;
     private javax.swing.JTextField mainTextField;

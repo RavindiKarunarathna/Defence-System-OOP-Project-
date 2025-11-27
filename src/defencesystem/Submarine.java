@@ -8,13 +8,76 @@ package defencesystem;
  *
  * @author User
  */
-public class Submarine extends javax.swing.JFrame{
+public class Submarine extends javax.swing.JFrame implements Obsever{
    
+    MainController mainController;
+    
     /**
      * Creates new form Submarine
      */
-    public Submarine() {
+    public Submarine(MainController mainController) {
         initComponents();
+        setLocation(770, 10);
+        this.mainController=mainController;
+        buttonsEnable(subCheckBox.isSelected());
+        setVisible(true);
+    }
+    
+    @Override
+    public void setAreaClear(boolean isChecked){
+     if(isChecked){
+            subTextFieldClear.setText("Area is Cleared");
+        }else{
+            subTextFieldClear.setText("Area is not Cleared");
+        }   
+    }
+    
+    @Override
+    public void setMessage(String message){
+        subTextArea.setText(subTextArea.getText().isEmpty()? message:subTextArea.getText()+"\n"+message);
+    }
+    
+    @Override
+    public String toString(){
+        return "Submarine";
+    }
+    
+    @Override
+    public void setEnableButtons(int value){
+        if(value>20){
+            subBtnShoot.setEnabled(true);
+        }else{
+            subBtnShoot.setEnabled(false);
+        }
+        
+        if(value>40){
+            subBtnSonar.setEnabled(true);
+        }else{
+            subBtnSonar.setEnabled(false);
+        }
+        
+        if(value>60){
+            subBtnMissile.setEnabled(true);
+        }else{
+            subBtnMissile.setEnabled(false);
+        }
+        
+        if(value>80){
+            subBtnTrident.setEnabled(true);
+        }else{
+            subBtnTrident.setEnabled(false);
+        }
+        
+    buttonsEnable(subCheckBox.isSelected());
+    }
+    
+    public void buttonsEnable(boolean status){
+        if(!status){
+            subBtnShoot.setEnabled(false);
+            subBtnSonar.setEnabled(false);
+            subBtnMissile.setEnabled(false);
+            subBtnTrident.setEnabled(false);
+        }
     }
     
     /**
@@ -39,14 +102,23 @@ public class Submarine extends javax.swing.JFrame{
         subBtnSend = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(500, 330));
 
-        subLabel.setBackground(new java.awt.Color(51, 255, 51));
+        subLabel.setBackground(new java.awt.Color(0, 153, 153));
         subLabel.setFont(new java.awt.Font("Arial", 3, 24)); // NOI18N
-        subLabel.setText("Submarine");
+        subLabel.setForeground(new java.awt.Color(255, 255, 255));
+        subLabel.setText("  Submarine");
+        subLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         subLabel.setOpaque(true);
 
+        subTextFieldClear.setBackground(new java.awt.Color(255, 255, 204));
         subTextFieldClear.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         subTextFieldClear.setText("Area is Not Cleared");
+        subTextFieldClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subTextFieldClearActionPerformed(evt);
+            }
+        });
 
         subBtnShoot.setText("Shoot");
         subBtnShoot.addActionListener(new java.awt.event.ActionListener() {
@@ -76,7 +148,14 @@ public class Submarine extends javax.swing.JFrame{
             }
         });
 
+        subCheckBox.setBackground(new java.awt.Color(0, 0, 0));
+        subCheckBox.setForeground(new java.awt.Color(255, 255, 255));
         subCheckBox.setText("Position");
+        subCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subCheckBoxActionPerformed(evt);
+            }
+        });
 
         subTextArea.setColumns(20);
         subTextArea.setRows(5);
@@ -89,68 +168,61 @@ public class Submarine extends javax.swing.JFrame{
         });
 
         subBtnSend.setText("Send");
+        subBtnSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subBtnSendActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(subLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(subTextFieldClear, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(174, 174, 174)
-                        .addComponent(subLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(subBtnShoot, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(subBtnSonar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(subTextFieldClear, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(subBtnShoot, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(subBtnSonar, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(subBtnMissile, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(subBtnTrident, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
-                        .addComponent(subCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(61, 61, 61))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(subTextFieldMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(subBtnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(subTextFieldMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(subBtnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(subBtnMissile, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(subBtnTrident, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(subCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(subLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(subLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(subTextFieldClear, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(subBtnShoot)
-                    .addComponent(subBtnSonar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(subBtnMissile)
-                    .addComponent(subBtnTrident)
-                    .addComponent(subCheckBox))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(subTextFieldMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(subTextFieldClear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(subBtnShoot)
+                            .addComponent(subBtnSonar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(subBtnMissile)
+                            .addComponent(subBtnTrident)
+                            .addComponent(subCheckBox))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(subTextFieldMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(subBtnSend))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -176,40 +248,24 @@ public class Submarine extends javax.swing.JFrame{
         // TODO add your handling code here:
     }//GEN-LAST:event_subTextFieldMsgActionPerformed
 
+    private void subBtnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subBtnSendActionPerformed
+        mainController.obseverMessage("Submarine", subTextFieldMsg.getText());
+        subTextFieldMsg.setText("");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_subBtnSendActionPerformed
+
+    private void subCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_subCheckBoxActionPerformed
+
+    private void subTextFieldClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subTextFieldClearActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_subTextFieldClearActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Submarine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Submarine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Submarine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Submarine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new Submarine().setVisible(true);
-//            }
-//        });
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;

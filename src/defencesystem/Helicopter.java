@@ -8,15 +8,71 @@ package defencesystem;
  *
  * @author User
  */
-public class Helicopter extends javax.swing.JFrame {
+public class Helicopter extends javax.swing.JFrame implements Obsever{
     
+    MainController mainController;
     /**
      * Creates new form Helicopter
      */
-    public Helicopter() {
+    public Helicopter(MainController mainController) {
         initComponents();
+        setLocation(770, 335);
+        this.mainController=mainController;
+        buttonsEnable(heliCheckBox.isSelected());
+        setVisible(true);
+    }
+    
+    @Override
+    public void setAreaClear(boolean isChecked){
+        if(isChecked){
+            heliTextFieldClear.setText("Area is Cleared");
+        }else{
+            heliTextFieldClear.setText("Area is not Cleared");
+        }
     }
 
+    @Override
+    public void setMessage(String message){
+      heliTextArea.setText(heliTextArea.getText().isEmpty()? message:heliTextArea.getText()+"\n"+message);
+    }
+    
+    @Override
+    public String toString(){
+        return "Helicopter";
+    }
+    
+    @Override
+    public void setEnableButtons(int value){
+        if(value>20){
+            heliBtnShoot.setEnabled(true);
+        }else{
+            heliBtnShoot.setEnabled(false);
+        }
+        
+        if(value>40){
+            heliBtnMissile.setEnabled(true);
+        }else{
+            heliBtnMissile.setEnabled(false);
+        }
+        
+        if(value>60){
+            heliBtnLaser.setEnabled(true);
+        }else{
+            heliBtnLaser.setEnabled(false);
+        }
+        
+        buttonsEnable(heliCheckBox.isSelected());
+       
+    }
+    
+    public void buttonsEnable(boolean status){
+        if(!status){
+            heliBtnShoot.setEnabled(false);
+            heliBtnMissile.setEnabled(false);
+            heliBtnLaser.setEnabled(false);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,10 +96,13 @@ public class Helicopter extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(51, 0, 255));
+        setFocusable(false);
+        setPreferredSize(new java.awt.Dimension(500, 330));
 
-        heliLabel.setBackground(new java.awt.Color(51, 255, 0));
+        heliLabel.setBackground(new java.awt.Color(0, 153, 153));
         heliLabel.setFont(new java.awt.Font("Arial", 3, 24)); // NOI18N
-        heliLabel.setText("Helicopter");
+        heliLabel.setForeground(new java.awt.Color(255, 255, 255));
+        heliLabel.setText("  Helicopter");
         heliLabel.setOpaque(true);
 
         heliBtnShoot.setText("Shoot");
@@ -67,7 +126,14 @@ public class Helicopter extends javax.swing.JFrame {
             }
         });
 
+        heliCheckBox.setBackground(new java.awt.Color(0, 0, 0));
+        heliCheckBox.setForeground(new java.awt.Color(255, 255, 255));
         heliCheckBox.setText("Position");
+        heliCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                heliCheckBoxActionPerformed(evt);
+            }
+        });
 
         heliTextArea.setColumns(20);
         heliTextArea.setRows(5);
@@ -80,63 +146,69 @@ public class Helicopter extends javax.swing.JFrame {
         });
 
         heliBtnSend.setText("Send");
+        heliBtnSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                heliBtnSendActionPerformed(evt);
+            }
+        });
 
+        heliTextFieldClear.setBackground(new java.awt.Color(255, 255, 204));
         heliTextFieldClear.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         heliTextFieldClear.setText("Area is Not Cleared");
+        heliTextFieldClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                heliTextFieldClearActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(heliLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(heliTextFieldClear, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(186, 186, 186)
-                        .addComponent(heliLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(heliBtnLaser, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(229, 229, 229)
+                        .addComponent(heliCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(heliBtnShoot, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(heliBtnMissile, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(heliBtnLaser, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(heliCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(heliBtnShoot, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(heliBtnMissile, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(heliTextFieldMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(heliBtnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(heliTextFieldClear, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addGap(39, 39, 39))
+                                .addComponent(heliTextFieldMsg)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(heliBtnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(heliLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
-                .addComponent(heliTextFieldClear, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(heliLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(heliTextFieldClear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(heliBtnShoot)
-                    .addComponent(heliBtnMissile))
+                    .addComponent(heliBtnMissile)
+                    .addComponent(heliBtnShoot))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(heliBtnLaser)
                     .addComponent(heliCheckBox))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(heliTextFieldMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(heliBtnSend))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(heliTextFieldMsg, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(heliBtnSend, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         pack();
@@ -159,40 +231,24 @@ public class Helicopter extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_heliTextFieldMsgActionPerformed
 
+    private void heliBtnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_heliBtnSendActionPerformed
+        mainController.obseverMessage("Helicopter", heliTextFieldMsg.getText());
+        heliTextFieldMsg.setText("");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_heliBtnSendActionPerformed
+
+    private void heliTextFieldClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_heliTextFieldClearActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_heliTextFieldClearActionPerformed
+
+    private void heliCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_heliCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_heliCheckBoxActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Helicopter.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Helicopter.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Helicopter.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Helicopter.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new Helicopter().setVisible(true);
-//            }
-//        });
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton heliBtnLaser;
